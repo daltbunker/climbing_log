@@ -20,7 +20,7 @@ import com.climbing_log.service.ifc.ClimbService;
 import com.climbing_log.service.ifc.LocationService;
 
 @RestController
-@RequestMapping(path = "/climbs")
+@RequestMapping(path = "/api/climbs")
 public class ClimbController {
     @Autowired
     ClimbService climbService;

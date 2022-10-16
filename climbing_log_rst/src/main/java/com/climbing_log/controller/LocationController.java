@@ -18,7 +18,7 @@ import com.climbing_log.model.Location;
 import com.climbing_log.service.ifc.LocationService;
 
 @RestController
-@RequestMapping(path = "/locations")
+@RequestMapping(path = "api/locations")
 public class LocationController {
     @Autowired
     LocationService locationService;

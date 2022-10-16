@@ -23,7 +23,7 @@ import com.climbing_log.service.ifc.AscentService;
 import com.climbing_log.service.ifc.ClimbService;
 
 @RestController
-@RequestMapping(path = "/ascents")
+@RequestMapping(path = "/api/ascents")
 public class AscentController {
     @Autowired
     AscentService ascentService;

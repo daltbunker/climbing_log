@@ -31,9 +31,9 @@ public class WebSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable(); // TODO this should be removed, it disables CORS
         http.authorizeRequests()
-            .antMatchers("/admin").hasRole("ADMIN")
-            .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-            .antMatchers("/").permitAll()
+            .antMatchers("/api/admin").hasRole("ADMIN")
+            .antMatchers("/api/user").hasAnyRole("USER", "ADMIN")
+            .antMatchers("/api").permitAll()
             .and().formLogin();
 
         return http.build();
