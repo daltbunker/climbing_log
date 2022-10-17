@@ -1,0 +1,21 @@
+<div class="login-container vertical-stack">
+    <h3 mat-dialog-title>Log In</h3>
+    <form [formGroup]="userForm" (ngSubmit)="onLogin()">
+        <div class="vertical-stack input-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input required minlength="6" matInput formControlName="username">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input required minlength="6" matInput formControlName="password" type="password">
+                <mat-hint>*username and password must be 6 or more characters</mat-hint>
+            </mat-form-field>
+            <div class="horizontal-stack btn-container">
+                <button class="btn-default" mat-dialog-close>close</button>
+                <button class="btn-default">login</button>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -12,6 +12,13 @@ import { SearchComponent } from './components/search/search.component';
 import { MyClimbsComponent } from './my-climbs/my-climbs.component';
 import { NewsCardComponent } from './components/news-card/news-card.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'
+import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,12 +30,19 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     RouteClimbsComponent,
     SideNavComponent,
     SearchComponent,
-    MyClimbsComponent
+    MyClimbsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
