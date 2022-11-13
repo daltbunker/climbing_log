@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ClimbFormComponent } from './components/climb-form/climb-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SideNavComponent,
     SearchComponent,
     MyClimbsComponent,
-    LoginComponent
+    LoginComponent,
+    ClimbFormComponent
   ],
   imports: [
     BrowserModule,
