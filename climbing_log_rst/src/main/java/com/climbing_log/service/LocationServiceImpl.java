@@ -1,5 +1,6 @@
 package com.climbing_log.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.climbing_log.enums.ClimbType;
 import com.climbing_log.exception.ResourceNotFoundException;
 import com.climbing_log.model.Location;
 import com.climbing_log.repository.LocationRepository;
@@ -25,13 +27,10 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location getLocationById(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException("location id must not be null");
-        }
         Optional<Location> locationOpt = locationRepository.findById(id);
 
         if (locationOpt.isEmpty()) {
-            throw new ResourceNotFoundException("location not found");
+            throw new ResourceNotFoundException("location not found by id");
         }
         
         Location location = locationOpt.get();
@@ -39,11 +38,31 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Page<Location> getAllLocations(Pageable pageable) {
-        Page<Location> locationPage = locationRepository.findAll(pageable);
-        if (locationPage == null || locationPage.isEmpty()) {
-            throw new ResourceNotFoundException("locations not found");
+    public List<Location> getLocationByName(String name) {
+        List<Location> locationList = locationRepository.findByName(name);
+
+        if (locationList == null || locationList.isEmpty()) {
+            throw new ResourceNotFoundException("location not found by name");
         }
-        return locationPage;
+        
+        return locationList;
+    }
+
+    @Override
+    public List<String> getSectors(ClimbType climbType) {
+        List<String> sectors = locationRepository.findSectors(climbType);
+        if (sectors == null || sectors.isEmpty()) {
+            throw new ResourceNotFoundException("sectors not found");
+        }
+        return sectors;
+    }
+
+    @Override
+    public List<String> getAreas(ClimbType climbType) {
+        List<String> areas = locationRepository.findAreas(climbType);
+        if (areas == null || areas.isEmpty()) {
+            throw new ResourceNotFoundException("areas not found");
+        }
+        return areas;
     }
 }

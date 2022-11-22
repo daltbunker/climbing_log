@@ -1,8 +1,8 @@
 package com.climbing_log.service.ifc;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
+import java.util.List;
 
+import com.climbing_log.enums.ClimbType;
 import com.climbing_log.model.Location;
 
 public interface LocationService {
@@ -10,5 +10,10 @@ public interface LocationService {
 
     Location getLocationById(Integer id);
 
-    Page<Location> getAllLocations(Pageable pageable);
+    List<Location> getLocationByName(String sector);
+
+    List<String> getSectors(ClimbType climbType);
+    
+    List<String> getAreas(ClimbType climbType);
 }
+    
