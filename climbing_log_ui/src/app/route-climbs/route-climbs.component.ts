@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchModel } from '../models/Search.model';
 import { RstApiService } from '../services/rst-api.service';
 
 @Component({
@@ -8,23 +9,31 @@ import { RstApiService } from '../services/rst-api.service';
 })
 export class RouteClimbsComponent implements OnInit {
 
-  private locations: Array<Location> = [];
-
+  public searchData: Array<SearchModel> = [];
+  public loading = [true, true];
   constructor(private rstApiService: RstApiService) { }
 
   ngOnInit(): void {
-    this.rstApiService.getAllLocations()
+    this.rstApiService.getAllLocations('routes')
     .subscribe(allLocations => {
-      this.locations = allLocations.content.map((location: any) => {
-        return {
-          id: location.id,
-          country: location.country,
-          state: location.state,
-          area: location.area,
-          sector: location.sector
+      allLocations.sectors.forEach((sector: string) => {
+        this.searchData.push({value: sector, type: 'sector'})
+      })
+      allLocations.areas.forEach((area: string) => {
+        this.searchData.push({value: area, type: 'area'})
+      })
+      this.loading[0] = false;
+    });
+
+    this.rstApiService.getAllClimbs()
+    .subscribe(allClimbs => {
+      allClimbs.forEach((climb: { name: any; type: string}) => {
+        if (climb.type === 'ROUTE') {
+          this.searchData.push({value: climb.name, type: 'climb'})
         }
       })
-    });
+      this.loading[1] = false;
+    })
   }
 
 }

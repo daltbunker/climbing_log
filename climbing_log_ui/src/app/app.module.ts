@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClimbFormComponent } from './components/climb-form/climb-form.component';
 
@@ -43,6 +44,7 @@ import { ClimbFormComponent } from './components/climb-form/climb-form.component
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     MatIconModule
   ],
