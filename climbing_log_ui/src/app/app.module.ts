@@ -18,9 +18,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClimbFormComponent } from './components/climb-form/climb-form.component';
+import { AscentFormComponent } from './components/ascent-form/ascent-form.component';
 
 @NgModule({
   declarations: [
@@ -34,16 +38,20 @@ import { ClimbFormComponent } from './components/climb-form/climb-form.component
     SearchComponent,
     MyClimbsComponent,
     LoginComponent,
-    ClimbFormComponent
+    ClimbFormComponent,
+    AscentFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatNativeDateModule,
+    MatSelectModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatIconModule

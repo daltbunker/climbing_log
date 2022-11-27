@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchModel } from 'src/app/models/Search.model';
 import { RstApiService } from 'src/app/services/rst-api.service';
+import { AscentFormComponent } from '../ascent-form/ascent-form.component';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +23,8 @@ export class SearchComponent implements OnInit {
   private searchType = '';
 
   constructor(
-    public rstApiService: RstApiService
+    public rstApiService: RstApiService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -113,6 +116,13 @@ export class SearchComponent implements OnInit {
       return grade.replace('B', 'V'); 
     }
     return '';
+  }
+
+  openLogModal(climb: any): void {
+    const dialogRef = this.dialog.open(AscentFormComponent, {
+      width: '400px',
+      minHeight: '300px'
+    })
   }
 
 }
