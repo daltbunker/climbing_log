@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { SearchModel } from 'src/app/models/Search.model';
 import { RstApiService } from 'src/app/services/rst-api.service';
@@ -13,7 +13,9 @@ import { AscentFormComponent } from '../ascent-form/ascent-form.component';
 })
 export class SearchComponent implements OnInit {
 
+  @Output() submitLogEmitter = new EventEmitter<boolean>();
   @Input() data: Array<{value: string, type: string}> = [];
+  private dialogRef: MatDialogRef<AscentFormComponent, any> | undefined;
   public filteredData: Observable<SearchModel[]> | undefined;
   public searchForm = new FormGroup({
     searchControl: new FormControl('')
@@ -32,6 +34,14 @@ export class SearchComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     ); 
+
+    this.submitLogEmitter.subscribe(event => {
+      if (event && this.dialogRef) {
+        this.dialogRef.close();
+      } else {
+        console.warn('failed to close ascent form')
+      }
+    });
   }
 
   private _filter(value: string): {value: string, type: string}[] {
@@ -84,15 +94,16 @@ export class SearchComponent implements OnInit {
   getClimbs(locationId: number): void {
     this.rstApiService.getClimbsByLocation(locationId)
       .subscribe(resp => {
-        this.searchResults = resp.map((result: {name: string, grade: string}) => {
-          const name = result.name;
+        this.searchResults = resp.map((result: {name: string, grade: string, id: number}) => {
           const grade = this.translateGrade(result.grade)
           return {
-            name,
-            grade
+            name: result.name,
+            grade,
+            climbId: result.id
           }
         })
         this.searchResultKeys = Object.keys(this.searchResults[0]);
+        this.searchResultKeys.pop();
       })
   }
 
@@ -119,9 +130,10 @@ export class SearchComponent implements OnInit {
   }
 
   openLogModal(climb: any): void {
-    const dialogRef = this.dialog.open(AscentFormComponent, {
+    this.dialogRef = this.dialog.open(AscentFormComponent, {
       width: '400px',
-      minHeight: '300px'
+      minHeight: '300px',
+      data: { ...climb, submitLogEmitter: this.submitLogEmitter }
     })
   }
 
