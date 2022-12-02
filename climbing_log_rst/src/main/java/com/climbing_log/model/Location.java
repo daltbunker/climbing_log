@@ -21,7 +21,7 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String country;
+    private String country; // TODO: make country required / not nullable
     private String state;
     private String sector;
     private String area;

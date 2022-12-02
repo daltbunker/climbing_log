@@ -1,15 +1,15 @@
 package com.climbing_log.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,15 +35,24 @@ public class AscentController {
     @PostMapping(path = "/add")
     public ResponseEntity<Ascent> addAscent(
             @RequestBody @Valid Ascent newAscent,
-            @RequestParam(required = false, name = "user") String username,
-            @RequestParam(required = false, name = "climb" ) Integer climb_id) {
+            @RequestParam(required = true, name = "user") String username,
+            @RequestParam(required = true, name = "climb" ) Integer climb_id) {
 
         Climb climb = climbService.getClimbById(climb_id);
         newAscent.setClimb(climb);
         User user = userService.getUserByUsername(username);
         newAscent.setUser(user);
-        Ascent Ascent = ascentService.addAscent(newAscent);
-        return ResponseEntity.ok(Ascent);
+        Ascent ascent = ascentService.addAscent(newAscent);
+        return ResponseEntity.ok(ascent);
+    }
+
+    @PutMapping(path = "/edit")
+    public ResponseEntity<Ascent> updateAscent(
+            @RequestBody @Valid Ascent updatedAscent,
+            @RequestParam(required = true, name = "id") Integer id) {
+        updatedAscent.setId(id);
+        Ascent ascent = ascentService.updateAscent(updatedAscent);
+        return ResponseEntity.ok(ascent);
     }
 
     @GetMapping(path = "/{id}")
@@ -54,9 +63,14 @@ public class AscentController {
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<Page<Ascent>> getAllAscents(
-        @PageableDefault(page = 0, size = 30) Pageable pageable) {
-        Page<Ascent> ascents = ascentService.getAllAscents(pageable);
+    public ResponseEntity<List<Ascent>> getAllAscents(
+            @RequestParam(required = false) Integer userId) {
+        if (userId != null) {
+            List<Ascent> ascents = ascentService.getAscentsByUserId(userId);
+            return ResponseEntity.ok(ascents);
+        }
+        List<Ascent> ascents = ascentService.getAllAscents();
         return ResponseEntity.ok(ascents);
     }
+
 }

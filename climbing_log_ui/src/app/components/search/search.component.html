@@ -36,9 +36,8 @@
                 <tr>
                     <th *ngFor="let key of searchResultKeys">{{key}}</th>
                 </tr>
-                <tr *ngFor="let result of searchResults" (click)="result.id ? getClimbs(result.id): openLogModal(result)">
+                <tr *ngFor="let result of searchResults" (click)="result.country ? getClimbs(result.id): openLogModal(result)">
                     <td *ngFor="let key of searchResultKeys" class="primary-table-column">
-                        <ng-container *ngIf="key !== 'climbId'"></ng-container>
                         {{result[key]}}
                     </td>
                 </tr>

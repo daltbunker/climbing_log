@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { Ascent } from '../models/Ascent.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -40,14 +38,22 @@ export class RstApiService {
   }
 
   // Ascents
-  // TODO: create type for Ascent
-  addAscent(newAscent: Ascent, climbId: number, username: string): Observable<any> {
+  addAscent(ascent: any, climbId: number, username: string): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>(
       'api/ascents/add?climb=' + climbId + '&user=' + username,
-      newAscent,
+      ascent,
       { headers }
     )
+  }
+
+  updateAscent(ascent: any, id: number): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.put<any>('api/ascents/edit?id=' + id, ascent, { headers });
+  }
+
+  getUserAscents(userId: number): Observable<any> {
+    return this.http.get<any>('api/ascents/all?userId=' + userId);
   }
 
   // Auth

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { RstApiService } from '../services/rst-api.service';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,21 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   })
 
-  constructor() { }
+  constructor(
+    private rstApiService: RstApiService
+  ) { }
 
   ngOnInit(): void {
   }
 
   onLogin(): void {
     console.log(this.userForm.value)
-  }
+    if (this.userForm.valid) {
+      this.rstApiService.loginUser()
+        .subscribe(resp => {
+          console.log(resp);
+        })
+    }
+    }
 
 }

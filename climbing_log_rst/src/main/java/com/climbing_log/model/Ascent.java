@@ -39,6 +39,7 @@ public class Ascent {
     private LocalDateTime date;
     @CreatedDate
     private LocalDateTime createdDate;
+    private String name;
 
     public Integer getId() {
         return id;
@@ -81,5 +82,11 @@ public class Ascent {
     }
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+    public String getName() {
+        return this.climb.getName();
+    }
+    public void setName(String name) {
+        this.name = this.climb.getName();
     }
 }

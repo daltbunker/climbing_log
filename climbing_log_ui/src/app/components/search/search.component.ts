@@ -56,14 +56,16 @@ export class SearchComponent implements OnInit {
         this.rstApiService.getClimbsByName(searchValue)
           .subscribe(resp => {
             this.searchResults = resp.map((result: any) => {
-              const { name } = result;
+              const { name, id } = result;
               const grade = this.translateGrade(result.grade);
               return {
                 name,
-                grade
+                grade,
+                id
               }
             })
             this.searchResultKeys = Object.keys(this.searchResults[0]);
+            this.searchResultKeys.pop();
           })
       } else {
         this.rstApiService.getLocationsByParam(searchValue)
@@ -71,15 +73,15 @@ export class SearchComponent implements OnInit {
             this.searchResults = resp.map((result: any) => {
               const { id, country, state, sector, area } = result;
               return {
-                id,
                 country,
                 state,
                 sector,
-                area
+                area,
+                id
               }
             })
             this.searchResultKeys = Object.keys(this.searchResults[0]);
-            this.searchResultKeys.shift();
+            this.searchResultKeys.pop();
           })
       }
     } else {
@@ -133,7 +135,7 @@ export class SearchComponent implements OnInit {
     this.dialogRef = this.dialog.open(AscentFormComponent, {
       width: '400px',
       minHeight: '300px',
-      data: { ...climb, submitLogEmitter: this.submitLogEmitter }
+      data: { ...climb, submitLogEmitter: this.submitLogEmitter, formType: 'new' }
     })
   }
 
