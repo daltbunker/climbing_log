@@ -1,0 +1,30 @@
+@use '../../../styles'
+
+.search-bar
+    padding-left: 20px
+    font-size: 16px
+    border: 1px solid styles.$tertiary-color
+    width: 500px
+    height: 40px
+    border-radius: 20px
+    color: styles.$secondary-color
+    outline: none
+
+table
+    border-spacing: 10px
+    border: 2px solid styles.$tertiary-color
+    border-radius: 4px
+    width: 100%
+    color: styles.$secondary-color
+
+th
+    text-align: left
+
+td
+    border-top: 1px solid styles.$tertiary-color
+    border-bottom: 1px solid styles.$tertiary-color
+    padding: 3px 6px
+
+tr:not(:first-child):hover
+    background-color: styles.$tertiary-color
+    cursor: pointer

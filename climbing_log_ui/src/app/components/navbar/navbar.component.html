@@ -1,0 +1,22 @@
+<nav>
+    <ul> 
+        <li>
+            <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        </li>
+        <li>
+            <a routerLink="/routes" routerLinkActive="active" ariaCurrentWhenActive="page">Routes</a>
+        </li>
+        <li>
+            <a routerLink="/boulders" routerLinkActive="active" ariaCurrentWhenActive="page">Boulders</a>
+        </li>
+        <li>
+            <a routerLink="/my-climbs" routerLinkActive="active" ariaCurrentWhenActive="page">My Climbs</a>
+        </li>
+    </ul>
+    <div class="">
+        <a class="logo" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">
+            SOUL CLIMBERS OF AMERICA
+        </a>
+        <button class="btn-default-inverse" style="margin-right: 20px; border: 1px solid white" (click)="openLogin()">Login</button>
+    </div>
+</nav>

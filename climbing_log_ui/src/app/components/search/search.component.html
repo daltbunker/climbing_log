@@ -1,0 +1,47 @@
+<div>
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="vertical-stack">
+            <mat-form-field class="example-full-width" appearance="fill" style="width: 40%">
+                <mat-label>Search</mat-label>
+                <input type="text"
+                    placeholder="Search for sectors, areas, or climbs"
+                    aria-label="Number"
+                    matInput
+                    formControlName="searchControl"
+                    [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"> 
+                    <mat-option *ngFor="let d of filteredData | async" [value]="d.value" (click)="setSearchType(d.type)">
+                        {{d.value}} <span style="color: #adadad">{{d.type}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button class="btn-default">search</button>
+        </div>
+    </form>
+    <div class="vertical-stack" style="margin-top: 50px" *ngIf="this.searchResults.length > 0">
+        <div style="width: 80%;">
+            <div class="vertical-stack" style="align-items: flex-start;">
+                <div class="breadcrumb" style="margin-left: 10px;" *ngIf="false">
+                    <!-- ng if type === 'area || sector || climb'  -->
+                    <span (click)="onBreadcrumbClick()">American Fork</span>  
+                        >
+                    <!-- ng if type === 'sector || climb' -->
+                    <span (click)="onBreadcrumbClick()">Hell</span>
+                        >
+                    <!-- ng if type === 'climb' -->
+                    <span (click)="onBreadcrumbClick()">Burning</span>
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <th *ngFor="let key of searchResultKeys">{{key}}</th>
+                </tr>
+                <tr *ngFor="let result of searchResults" (click)="result.country ? getClimbs(result.id): openLogModal(result)">
+                    <td *ngFor="let key of searchResultKeys" class="primary-table-column">
+                        {{result[key]}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

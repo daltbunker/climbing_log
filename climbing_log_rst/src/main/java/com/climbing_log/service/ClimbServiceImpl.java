@@ -1,10 +1,9 @@
 package com.climbing_log.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.climbing_log.enums.ClimbType;
@@ -44,11 +43,29 @@ public class ClimbServiceImpl implements ClimbService {
     }
 
     @Override
-    public Page<Climb> getAllClimbs(Pageable pageable) {
-        Page<Climb> climbPage = climbRepository.findAll(pageable);
-        if (climbPage == null || climbPage.isEmpty()) {
+    public List<Climb> getAllClimbs() {
+        List<Climb> climbList = climbRepository.findAll();
+        if (climbList == null || climbList.isEmpty()) {
             throw new ResourceNotFoundException("climbs not found");
         }
-        return climbPage;
+        return climbList;
+    }
+
+    @Override
+    public List<Climb> getClimbsByLocation(Integer id) {
+        List<Climb> climbList = climbRepository.findClimbsByLocation(id);
+        if (climbList == null || climbList.isEmpty()) {
+            throw new ResourceNotFoundException("climbs not found");
+        }
+        return climbList;
+    }
+
+    @Override
+    public List<Climb> getClimbsByName(String name) {
+        List<Climb> climbList = climbRepository.findClimbsByName(name);
+        if (climbList == null || climbList.isEmpty()) {
+            throw new ResourceNotFoundException("climbs not found");
+        }
+        return climbList;
     }
 }

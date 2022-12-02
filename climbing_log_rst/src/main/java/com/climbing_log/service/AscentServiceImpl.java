@@ -1,10 +1,9 @@
 package com.climbing_log.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.climbing_log.exception.ResourceNotFoundException;
@@ -24,6 +23,17 @@ public class AscentServiceImpl implements AscentService {
     }
 
     @Override
+    public Ascent updateAscent(Ascent updatedAscent) {
+        Ascent prevAscent = this.getAscentById(updatedAscent.getId());
+        prevAscent.setAttempts(updatedAscent.getAttempts());
+        prevAscent.setComment(updatedAscent.getComment());
+        prevAscent.setDate(updatedAscent.getDate());
+
+        Ascent ascent = ascentRepository.save(prevAscent);
+        return ascent;
+    }
+
+    @Override
     public Ascent getAscentById(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ascent id must not be null");
@@ -39,12 +49,21 @@ public class AscentServiceImpl implements AscentService {
     }
 
     @Override
-    public Page<Ascent> getAllAscents(Pageable pageable) {
-        Page<Ascent> ascentPage = ascentRepository.findAll(pageable);
+    public List<Ascent> getAllAscents() {
+        List<Ascent> ascentPage = ascentRepository.findAll();
         if (ascentPage == null || ascentPage.isEmpty()) {
             throw new ResourceNotFoundException("ascents not found");
         }
         return ascentPage ;
     }
-    
+
+    @Override
+    public List<Ascent> getAscentsByUserId(Integer userId) {
+        List<Ascent> ascents = ascentRepository.findAllByUserId(userId);
+        if (ascents == null || ascents.isEmpty()) {
+            throw new ResourceNotFoundException("ascents not found");
+        }
+        return ascents;
+    }
+
 }
